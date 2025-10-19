@@ -16,9 +16,42 @@ Follow these steps to set up and run the project locally:
 
 > cd llm-graph-builder
 
-2. Install Dependency :
+2. Install uv (if not already installed):
 
-> pip install -t requirements.txt
+> pip install uv
+
+3. Install Dependencies using uv:
+
+> cd backend
+> uv sync
+
+Or to install in a new virtual environment:
+
+> uv venv
+> source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+> uv pip install -r requirements.txt
+
+4. Alternative: Install from pyproject.toml:
+
+> uv pip install -e .
+
+## Managing Dependencies with uv
+
+This project now uses uv to manage dependencies. To update the requirements.txt file from pyproject.toml:
+
+> uv pip compile pyproject.toml -o requirements.txt
+
+To sync your environment with pyproject.toml:
+
+> uv sync
+
+To add a new dependency:
+
+> uv add package_name
+
+To remove a dependency:
+
+> uv remove package_name
 
 ## Run backend project using unicorn
 Run the server:
