@@ -28,19 +28,14 @@ CHUNK_VECTOR_EMBEDDING_DIMENSION = 384
 
 DROP_CHUNK_VECTOR_INDEX_QUERY = f"DROP INDEX {CHUNK_VECTOR_INDEX_NAME} IF EXISTS;"
 CREATE_CHUNK_VECTOR_INDEX_QUERY = """
-CREATE VECTOR INDEX {index_name} IF NOT EXISTS FOR (c:Chunk) ON c.embedding
-OPTIONS {{
-  indexConfig: {{
-    `vector.dimensions`: {embedding_dimension},
-    `vector.similarity_function`: 'cosine'
-  }}
-}}
+CALL db.index.vector.createNodeIndex('{index_name}', 'Chunk', 'embedding', {embedding_dimension}, 'cosine')
 """
 
 def create_vector_index(driver, index_type, embedding_dimension=None):
     drop_query = ""
     query = ""
-    
+    params = {}
+
     if index_type == CHUNK_VECTOR_INDEX_NAME:
         drop_query = DROP_CHUNK_VECTOR_INDEX_QUERY
         query = CREATE_CHUNK_VECTOR_INDEX_QUERY.format(
@@ -64,11 +59,18 @@ def create_vector_index(driver, index_type, embedding_dimension=None):
 
             try:
                 start_step = time.time()
-                session.run(query)
+                # Check if index already exists to avoid errors
+                check_query = "SHOW INDEXES YIELD name WHERE name = $name AND type = 'VECTOR'"
+                check_result = session.run(check_query, {"name": CHUNK_VECTOR_INDEX_NAME})
+                if check_result.peek():
+                    logging.info(f"Vector index '{CHUNK_VECTOR_INDEX_NAME}' already exists, skipping creation")
+                    return
+
+                session.run(query, params)
                 logging.info(f"Created vector index in {time.time() - start_step:.2f} seconds.")
             except Exception as e:
                 logging.error(f"Failed to create vector index: {e}")
-                return  
+                return
     except Exception as e:
         logging.error("An error occurred while creating the vector index.", exc_info=True)
         logging.error(f"Error details: {str(e)}")
@@ -204,7 +206,7 @@ def graph_schema_consolidation(graph):
         messages=[("system", GRAPH_CLEANUP_PROMPT), ("human", "{input}")],
         partial_variables={"format_instructions": parser.get_format_instructions()}
     )
-    graph_cleanup_model = os.getenv("GRAPH_CLEANUP_MODEL", 'openai_gpt_4o')
+    graph_cleanup_model = os.getenv("GRAPH_CLEANUP_MODEL", 'ollama_llama3')
     llm, _ = get_llm(graph_cleanup_model)
     chain = prompt | llm | parser
 

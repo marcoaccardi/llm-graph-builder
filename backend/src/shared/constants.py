@@ -199,7 +199,8 @@ WITH
   entities,
   baseCommunityCount + firstlevelcommCount + secondlevelcommCount + thirdlevelcommCount AS commCount,
   inCommunityCount + parentCommunityRelCount1 + parentCommunityRelCount2 + parentCommunityRelCount3 AS communityRelCount
-CALL (entities) {
+CALL {
+  WITH entities
   UNWIND entities AS e
   RETURN sum(COUNT { (e)-->(e2:__Entity__) WHERE e2 in entities }) AS entityEntityRelCount
 }
@@ -234,7 +235,8 @@ WITH
   partOfRelCount + hasEntityRelCount + similarRelCount + nextChunkRelCount AS chunkRelCount,
   entityNodeCount,
   entities
-CALL (entities) {
+CALL {
+  WITH entities
   UNWIND entities AS e
   RETURN sum(COUNT { (e)-->(e2:__Entity__) WHERE e2 in entities }) AS entityEntityRelCount
 }
