@@ -16,6 +16,48 @@ body {
   margin: 0;
 }
 
+/* NUCLEAR OPTION: Remove ALL backdrop filters globally - highest priority */
+::backdrop {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  filter: none !important;
+}
+
+/* Remove ALL blur effects from everything */
+* {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  filter: none !important;
+}
+
+/* Specific overrides for Dialog components */
+[data-testid*="dialog"],
+[data-test-id*="dialog"],
+.dialog,
+.ndl-dialog,
+[data-testid*="modal"],
+[data-test-id*="modal"],
+.modal,
+.overlay,
+.backdrop {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  filter: none !important;
+}
+
+/* Remove blur classes */
+.blur-sm,
+.blur-md,
+.blur-lg,
+.blurred,
+.is-blurred,
+.has-blur,
+.pointer-events-none {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  filter: none !important;
+}
+
 .ndl-progress-bar-wrapper .ndl-header .ndl-heading::after{
   animation: none !important;
 }

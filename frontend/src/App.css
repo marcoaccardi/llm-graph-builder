@@ -365,7 +365,7 @@
 }
 
 .ndl-modal-root {
-  z-index: 39 !important;
+  z-index: 9999 !important;
 }
 
 .tbody-dark .ndl-data-grid-tr:hover {
@@ -385,7 +385,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 111;
+  z-index: 100;
   opacity: 0.8;
   background-color: rgb(201 201 201 / 40%);
 }
@@ -441,7 +441,62 @@
 
 
 .resource-sections.blur-sm {
-  filter: blur(2px);
+  /* Removed blur filter to fix modal blur issue */
+}
+
+/* AGGRESSIVE FIX: Remove backdrop blur from ALL dialog components */
+::backdrop {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  filter: none !important;
+}
+
+/* Remove blur from Dialog overlay - multiple selectors to catch all variants */
+[data-testid="dialog-backdrop"],
+[data-test-id="dialog-backdrop"],
+.dialog-backdrop,
+.ndl-dialog-backdrop,
+[data-testid*="dialog"] .backdrop,
+[data-test-id*="dialog"] .backdrop,
+.backdrop-filter,
+.blurred-backdrop,
+.modal-backdrop,
+.overlay-blur {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  filter: none !important;
+  -webkit-filter: none !important;
+}
+
+/* Remove blur from the dialog content itself */
+[data-testid*="dialog-content"],
+[data-test-id*="dialog-content"],
+.dialog-content,
+.ndl-dialog-content,
+[data-testid*="modal-content"],
+[data-test-id*="modal-content"] {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  filter: none !important;
+}
+
+/* Nuclear option: Remove ALL backdrop filters globally */
+* {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+/* Remove any blur classes that might be applied */
+.blur-sm,
+.blur-md,
+.blur-lg,
+.blurred,
+.is-blurred,
+.has-blur {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  filter: none !important;
+  -webkit-filter: none !important;
 }
 
 .profile-container {

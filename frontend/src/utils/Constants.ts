@@ -12,76 +12,19 @@ export const llms =
   process.env?.VITE_LLM_MODELS?.trim() != ''
     ? (process.env.VITE_LLM_MODELS?.split(',') as string[])
     : [
-        'openai_gpt_4o',
-        'openai_gpt_4o_mini',
-        'openai_gpt_4.1',
-        'openai_gpt_4.1_mini',
-        'openai_gpt_o3_mini',
-        'gemini_1.5_pro',
-        'gemini_1.5_flash',
-        'gemini_2.0_flash',
-        'gemini_2.5_pro',
-        'diffbot',
-        'azure_ai_gpt_35',
-        'azure_ai_gpt_4o',
         'ollama_llama3',
-        'groq_llama3_70b',
-        'anthropic_claude_4_sonnet',
-        'fireworks_llama4_maverick',
-        'fireworks_llama4_scout',
-        'fireworks_qwen72b_instruct',
-        'bedrock_nova_micro_v1',
-        'bedrock_nova_lite_v1',
-        'bedrock_nova_pro_v1',
-        'fireworks_deepseek_r1',
-        'fireworks_deepseek_v3',
-        'llama4_maverick',
-        'fireworks_qwen3_30b',
-        'fireworks_qwen3_235b',
       ];
 
 export const supportedLLmsForRagas = [
-  'openai_gpt_4',
-  'openai_gpt_4o',
-  'openai_gpt_4o_mini',
-  'openai_gpt_4.1',
-  'openai_gpt_4.1_mini',
-  'gemini_1.5_pro',
-  'gemini_1.5_flash',
-  'gemini_2.0_flash',
-  'gemini_2.5_pro',
-  'azure_ai_gpt_35',
-  'azure_ai_gpt_4o',
-  'groq_llama3_70b',
-  'anthropic_claude_4_sonnet',
-  'fireworks_llama4_maverick',
-  'fireworks_llama4_scout',
-  'openai_gpt_o3_mini',
-  'llama4_maverick',
-  'fireworks_qwen3_30b',
-  'fireworks_qwen3_235b',
+  'ollama_llama3',
 ];
 export const supportedLLmsForGroundTruthMetrics = [
-  'openai_gpt_4',
-  'openai_gpt_4o',
-  'openai_gpt_4o_mini',
-  'openai_gpt_4.1',
-  'openai_gpt_4.1_mini',
-  'azure_ai_gpt_35',
-  'azure_ai_gpt_4o',
-  'groq_llama3_70b',
-  'anthropic_claude_4_sonnet',
-  'fireworks_llama4_maverick',
-  'fireworks_llama4_scout',
-  'openai_gpt_o3_mini',
-  'llama4_maverick',
-  'fireworks_qwen3_30b',
-  'fireworks_qwen3_235b',
+  'ollama_llama3',
 ];
 export const prodllms =
   process.env.VITE_LLM_MODELS_PROD?.trim() != ''
     ? (process.env.VITE_LLM_MODELS_PROD?.split(',') as string[])
-    : ['openai_gpt_4o', 'openai_gpt_4o_mini', 'diffbot', 'gemini_2.0_flash'];
+    : ['ollama_llama3'];
 
 export const chatModeLables = {
   vector: 'vector',
@@ -187,7 +130,7 @@ export const tooltips = {
   predinedSchema: 'Predefined Schema',
   dataImporterJson: 'Data Importer JSON',
 };
-export const PRODMODLES = ['openai_gpt_4o', 'openai_gpt_4o_mini', 'diffbot', 'gemini_1.5_flash'];
+export const PRODMODLES = ['ollama_llama3'];
 export const buttonCaptions = {
   exploreGraphWithBloom: 'Explore Graph',
   showPreviewGraph: 'Preview Graph',

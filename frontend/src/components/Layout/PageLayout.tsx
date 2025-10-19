@@ -7,7 +7,7 @@ import { clearChatAPI } from '../../services/QnaAPI';
 import { useCredentials } from '../../context/UserCredentials';
 import { connectionState, OptionType } from '../../types';
 import { useMessageContext } from '../../context/UserMessages';
-import { useMediaQuery, Spotlight, SpotlightTour, useSpotlightContext } from '@neo4j-ndl/react';
+import { useMediaQuery } from '@neo4j-ndl/react';
 import { useFileContext } from '../../context/UsersFiles';
 import SchemaFromTextDialog from '../../components/Popups/GraphEnhancementDialog/EnitityExtraction/SchemaFromTextDialog';
 import useSpeechSynthesis from '../../hooks/useSpeech';
@@ -30,123 +30,6 @@ const GCSModal = lazy(() => import('../DataSources/GCS/GCSModal'));
 const S3Modal = lazy(() => import('../DataSources/AWS/S3Modal'));
 const GenericModal = lazy(() => import('../WebSources/GenericSourceModal'));
 const ConnectionModal = lazy(() => import('../Popups/ConnectionModal/ConnectionModal'));
-const spotlightsforunauthenticated = [
-  {
-    target: 'loginbutton',
-    children: (
-      <>
-        <Spotlight.Header>Login with Neo4j</Spotlight.Header>
-        <Spotlight.Body>Using Google Account or Email Address</Spotlight.Body>
-      </>
-    ),
-  },
-  {
-    target: 'connectbutton',
-    children: (
-      <>
-        <Spotlight.Header>Connect To Neo4j Database</Spotlight.Header>
-        <Spotlight.Body>Fill out the neo4j credentials and click on connect</Spotlight.Body>
-      </>
-    ),
-  },
-  {
-    target: 'dropzone',
-    children: (
-      <>
-        <Spotlight.Header>Upload documents </Spotlight.Header>
-        <Spotlight.Body>Upload any unstructured files</Spotlight.Body>
-      </>
-    ),
-  },
-  {
-    target: 'llmdropdown',
-    children: (
-      <>
-        <Spotlight.Header>Choose The Desired LLM</Spotlight.Header>
-      </>
-    ),
-  },
-  {
-    target: 'generategraphbtn',
-    children: (
-      <>
-        <Spotlight.Header>Start The Extraction Process</Spotlight.Header>
-        <Spotlight.Body>Click On Generate Graph</Spotlight.Body>
-      </>
-    ),
-  },
-  {
-    target: 'visualizegraphbtn',
-    children: (
-      <>
-        <Spotlight.Header>Visualize The Knowledge Graph</Spotlight.Header>
-        <Spotlight.Body>Select At Least One or More Completed Files From The Table For Visualization</Spotlight.Body>
-      </>
-    ),
-  },
-  {
-    target: 'chatbtn',
-    children: (
-      <>
-        <Spotlight.Header>Ask Questions Related To Documents</Spotlight.Header>
-      </>
-    ),
-  },
-];
-const spotlights = [
-  {
-    target: 'connectbutton',
-    children: (
-      <>
-        <Spotlight.Header>Connect To Neo4j Database</Spotlight.Header>
-        <Spotlight.Body>Fill out the neo4j credentials and click on connect</Spotlight.Body>
-      </>
-    ),
-  },
-  {
-    target: 'dropzone',
-    children: (
-      <>
-        <Spotlight.Header>Upload documents </Spotlight.Header>
-        <Spotlight.Body>Upload any unstructured files</Spotlight.Body>
-      </>
-    ),
-  },
-  {
-    target: 'llmdropdown',
-    children: (
-      <>
-        <Spotlight.Header>Choose The Desired LLM</Spotlight.Header>
-      </>
-    ),
-  },
-  {
-    target: 'generategraphbtn',
-    children: (
-      <>
-        <Spotlight.Header>Start The Extraction Process</Spotlight.Header>
-        <Spotlight.Body>Click On Generate Graph</Spotlight.Body>
-      </>
-    ),
-  },
-  {
-    target: 'visualizegraphbtn',
-    children: (
-      <>
-        <Spotlight.Header>Visualize The Knowledge Graph</Spotlight.Header>
-        <Spotlight.Body>Select At Least One or More Completed Files From The Table For Visualization</Spotlight.Body>
-      </>
-    ),
-  },
-  {
-    target: 'chatbtn',
-    children: (
-      <>
-        <Spotlight.Header>Ask Questions Related To Documents</Spotlight.Header>
-      </>
-    ),
-  },
-];
 const PageLayout: React.FC = () => {
   const [openConnection, setOpenConnection] = useState<connectionState>({
     openPopUp: false,
@@ -206,7 +89,6 @@ const PageLayout: React.FC = () => {
   const navigate = useNavigate();
   const { user, isAuthenticated } = useAuth0();
   const { cancel } = useSpeechSynthesis();
-  const { setActiveSpotlight } = useSpotlightContext();
   const isYoutubeOnly = useMemo(
     () => APP_SOURCES.includes('youtube') && !APP_SOURCES.includes('wiki') && !APP_SOURCES.includes('web'),
     []
@@ -302,13 +184,6 @@ const PageLayout: React.FC = () => {
       }
     }
     initializeConnection();
-    if (!isAuthenticated && isFirstTimeUser) {
-      setActiveSpotlight('loginbutton');
-    }
-
-    if ((isAuthenticated || SKIP_AUTH) && isFirstTimeUser) {
-      setActiveSpotlight('connectbutton');
-    }
   }, [isAuthenticated, isFirstTimeUser]);
 
   const toggleLeftDrawer = useCallback(() => {
@@ -529,6 +404,7 @@ const PageLayout: React.FC = () => {
 
   return (
     <>
+      {/* DISABLED SPOTLIGHT TOUR - CAUSING BUTTON UNRESPONSIVENESS
       {!isAuthenticated && !SKIP_AUTH && isFirstTimeUser ? (
         <SpotlightTour
           spotlights={spotlightsforunauthenticated}
@@ -560,6 +436,7 @@ const PageLayout: React.FC = () => {
           }}
         />
       ) : null}
+      END DISABLED SPOTLIGHT TOUR */}
 
       <Suspense fallback={<FallBackDialog />}>
         <ConnectionModal

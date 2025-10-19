@@ -16,7 +16,6 @@ import {
   deduplicateByFullPattern,
   deduplicateNodeByValue,
 } from '../../../../utils/Utils';
-import TooltipWrapper from '../../../UI/TipWrapper';
 
 export default function NewEntityExtractionSetting({
   view,
@@ -375,35 +374,19 @@ export default function NewEntityExtractionSetting({
               }}
             >
               <Menu.Item
-                title={
-                  <TooltipWrapper hasButtonWrapper={true} placement='right' tooltip={tooltips.predinedSchema}>
-                    Predefined Schema
-                  </TooltipWrapper>
-                }
+                title="Predefined Schema"
                 onClick={onPredefinedSchemaCLick}
               />
               <Menu.Item
-                title={
-                  <TooltipWrapper hasButtonWrapper={true} placement='right' tooltip={tooltips.useExistingSchema}>
-                    Load Existing Schema
-                  </TooltipWrapper>
-                }
+                title="Load Existing Schema"
                 onClick={onLoadExistingSchemaCLick}
               />
               <Menu.Item
-                title={
-                  <TooltipWrapper hasButtonWrapper={true} placement='right' tooltip={tooltips.createSchema}>
-                    Get Schema From Text
-                  </TooltipWrapper>
-                }
+                title="Get Schema From Text"
                 onClick={onSchemaFromTextCLick}
               />
               <Menu.Item
-                title={
-                  <TooltipWrapper hasButtonWrapper={true} placement='right' tooltip={tooltips.createSchema}>
-                    Data Importer JSON
-                  </TooltipWrapper>
-                }
+                title="Data Importer JSON"
                 onClick={onDataImporterSchemaCLick}
               />
             </Menu.Items>

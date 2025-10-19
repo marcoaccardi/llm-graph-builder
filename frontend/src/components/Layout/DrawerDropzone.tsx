@@ -82,7 +82,7 @@ const DrawerDropzone: React.FC<DrawerProps> = ({
                   </div>
                 )}
                 <div className={`${!connectionStatus ? 'cursor-not-allowed' : ''} h-full`}>
-                  <div className={`resource-sections ${!connectionStatus ? 'blur-sm pointer-events-none' : ''}`}>
+                  <div className={`resource-sections ${!connectionStatus ? 'pointer-events-none' : ''}`}>
                     <Flex gap='6' className='h-full source-container'>
                       {APP_SOURCES.includes('local') && (
                         <div className='px-6 outline-dashed outline-2 outline-offset-2 outline-gray-100 mt-3 imageBg'>
@@ -142,7 +142,7 @@ const DrawerDropzone: React.FC<DrawerProps> = ({
               </span>
             </Typography>
             <div className={`h-full cursor-pointer`} onClick={() => loginWithRedirect()}>
-              <div className={`resource-sections blur-sm pointer-events-none`}>
+              <div className="resource-sections pointer-events-none">
                 <Flex gap='6' className='h-full source-container'>
                   {APP_SOURCES.includes('local') && (
                     <div className='px-6 outline-dashed outline-2 outline-offset-2 outline-gray-100 mt-3 imageBg'>
