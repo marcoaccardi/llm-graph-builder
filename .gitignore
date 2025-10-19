@@ -174,3 +174,6 @@ newenv
 files
 startupbackend.sh
 startupfrontend.sh
+
+backend/embedding_model
+neo4j-community-5.26.0

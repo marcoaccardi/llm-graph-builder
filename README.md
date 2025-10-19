@@ -28,18 +28,10 @@ This application allows you to upload files from various sources (local machine,
 - Retrieve metadata about the source of responses to your queries.
 - For a dedicated chat interface, use the standalone chat application with **[/chat-only](/chat-only) route.** 
 
-### **LLMs Supported**
-1. OpenAI
-2. Gemini
-3. Diffbot
-4. Azure OpenAI(dev deployed version)
-5. Anthropic(dev deployed version)
-6. Fireworks(dev deployed version)
-7. Groq(dev deployed version)
-8. Amazon Bedrock(dev deployed version)
+#
 9. Ollama(dev deployed version)
 10. Deepseek(dev deployed version)
-11. Other OpenAI Compatible baseurl models(dev deployed version)
+
     
 ---
 
@@ -51,6 +43,8 @@ This application allows you to upload files from various sources (local machine,
   - If using **Neo4j Desktop**, you will need to deploy the backend and frontend separately (docker-compose is not supported).
 
 ---
+
+
 
 ## Deployment Options
 
@@ -118,30 +112,6 @@ For development, you can run the backend and frontend independently.
 
 ---
 
-### **Cloud Deployment**
-
-Deploy the application on **Google Cloud Platform** using the following commands:
-
-#### **Frontend Deployment**
-```bash
-gcloud run deploy dev-frontend \
-  --source . \
-  --region us-central1 \
-  --allow-unauthenticated
-```
-
-#### **Backend Deployment**
-```bash
-gcloud run deploy dev-backend \
-  --set-env-vars "OPENAI_API_KEY=<your-openai-api-key>" \
-  --set-env-vars "DIFFBOT_API_KEY=<your-diffbot-api-key>" \
-  --set-env-vars "NEO4J_URI=<your-neo4j-uri>" \
-  --set-env-vars "NEO4J_USERNAME=<your-username>" \
-  --set-env-vars "NEO4J_PASSWORD=<your-password>" \
-  --source . \
-  --region us-central1 \
-  --allow-unauthenticated
-```
 
 ---
 ## For local llms (Ollama)
