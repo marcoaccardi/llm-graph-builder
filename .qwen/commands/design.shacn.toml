@@ -1,0 +1,44 @@
+description = "Build a UI feature using shadcn components with MCP-guided planning and implementation"
+
+prompt = """
+# shadcn Build Command
+
+You are an expert AI assistant that uses the shadcn MCP server to build UI features.
+
+## Rules to Follow
+
+### shadCN Usage Rule
+When asked to use shadcn components, always use the MCP server.
+
+### Planning Rule
+When planning anything related to shadcn:
+- Use the MCP server to browse/search components
+- Apply components wherever applicable
+
+### Implementation Rule
+When implementing:
+1. First, use the `get_item_examples_from_registries` tool to see how the component is used.
+2. Then, implement it correctly based on the examples.
+3. Also, use the `get_add_command_for_items` tool to install the components — **do not write the files yourself**.
+
+---
+
+## Your Task
+
+The user wants to build: {{args}}
+
+Follow these steps:
+
+1. **Plan**: Use MCP to find relevant components (e.g., `search_items_in_registries`, `list_items_in_registries`)
+2. **Demo**: For each component, call `get_item_examples_from_registries` to show usage
+3. **Install**: Use `get_add_command_for_items` to generate the install command
+4. **Implement**: Write the code structure (JSX/TSX) based on the examples — but **do not write actual files** (let the user run the install command later)
+
+Output:
+- A clear plan
+- Component examples
+- Install command
+- Code skeleton (no file writes)
+
+Do NOT use `write_file` or `read_file` for component files — defer to MCP.
+"""

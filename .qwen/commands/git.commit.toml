@@ -1,0 +1,62 @@
+# In: .qwen/commands/git/commit.toml
+# Invoked via: /git:commit <optional arguments>
+
+description = "Analyzes git changes and creates a smart git commit with conventional commit format"
+
+# The prompt uses !{...} to execute commands and inject their output.
+prompt = """
+Smart Git Commit Assistant
+
+Please help me create one or more git commits by analyzing the scope of changes and grouping files appropriately:
+
+1. First, check the current git status to see what has changed:
+
+```bash
+!{git status --porcelain}
+```
+
+2. If no files are staged, categorize the changes by scope:
+
+```bash
+# Categorize files by extension/type
+echo "Frontend files:"
+!{git diff --name-only --diff-filter=ACMR | grep -E "\\.(js|jsx|ts|tsx|css|scss|sass|less|html|vue)$" || echo "No frontend files changed"}
+
+echo -e "\\nBackend files:"
+!{git diff --name-only --diff-filter=ACMR | grep -E "\\.(py|go|rb|php|java|cpp|c|cs)$" || echo "No backend files changed"}
+
+echo -e "\\nDocumentation:"
+!{git diff --name-only --diff-filter=ACMR | grep -E "\\.(md|txt|rst)$" || echo "No documentation files changed"}
+
+echo -e "\\nConfiguration:"
+!{git diff --name-only --diff-filter=ACMR | grep -E "\\.(json|yml|yaml|xml|toml|ini|conf)$" || echo "No configuration files changed"}
+
+echo -e "\\nTests:"
+!{git diff --name-only --diff-filter=ACMR | grep -E "test\\.|\\.test\\.|_test\\.go|spec\\." || echo "No test files changed"}
+
+echo -e "\\nOther files:"
+!{git diff --name-only --diff-filter=ACMR | grep -v -E "\\.(js|jsx|ts|tsx|css|scss|sass|less|html|vue|py|go|rb|php|java|cpp|c|cs|md|txt|rst|json|yml|yaml|xml|toml|ini|conf)$" | grep -v -E "test\\.|\\.test\\.|_test\\.go|spec\\." || echo "No other file types found"}
+```
+
+3. Based on the categorized changes, suggest staging and committing files by scope:
+
+- For each distinct scope (frontend, backend, docs, etc.), recommend a separate commit if the changes are unrelated
+- Example: If there are both frontend and backend changes, suggest making two separate commits
+
+4. For each scoped commit, suggest:
+- The appropriate commit type (feat/fix/docs/style/refactor/perf/test/chore)
+- A concise, descriptive commit message following conventional commits
+- Specific git add command for the files in that scope
+
+5. After showing the suggested scoped commits, ask if I want to:
+- Stage and commit all scopes separately
+- Combine some scopes into a single commit
+- Modify the file groupings
+- Only commit specific scopes
+
+6. Once approved, provide the git add and git commit commands to execute for each scope.
+
+7. Finally, ask if I want to push or create a PR.
+
+Additional instructions: {{args}}
+"""
